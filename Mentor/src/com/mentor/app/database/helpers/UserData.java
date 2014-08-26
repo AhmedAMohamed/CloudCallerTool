@@ -10,6 +10,8 @@ import java.util.ArrayList;
 public class UserData {
 
 	private String userName;  			 // the user name of any client in case to be needed to show it in each page
+	private String email;
+	private String userId;
 	private String typeId;   			 // the type of this client 
 	private ArrayList<Tool> tools;		 //	an array of tools all the tools can be accessed by that user 
 	private BigInteger dueDate;			 //	the due date that the user can still access any tool
@@ -51,6 +53,18 @@ public class UserData {
 	}
 	protected void setValid(boolean valid) {
 		this.valid = valid;
+	}
+	protected String getEmail() {
+		return email;
+	}
+	protected void setEmail(String email) {
+		this.email = email;
+	}
+	protected String getUserId() {
+		return userId;
+	}
+	protected void setUserId(String userId) {
+		this.userId = userId;
 	}
 	
 }

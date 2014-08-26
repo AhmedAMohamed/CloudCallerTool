@@ -113,14 +113,7 @@ public class DatabaseConnector {
 		    			tempo[0] = "tool_name";
 		    			tempo[1] = temp;
 		    			data.add(tempo);
-		    			/*
-		    			temp = rs.getString("type_id");
-				           
-		    			tempo = new String[2];
-		    			tempo[0] = "type_id";
-		    			tempo[1] = temp;
-		    			data.add(tempo);
-			           */
+		    		
 		    		}	
 		    		return data;
 		    	}
