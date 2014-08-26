@@ -3,6 +3,7 @@ package com.mentor.app.database;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -14,11 +15,14 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 
+import com.mentor.app.database.helpers.Tool;
+import com.mentor.app.database.helpers.UserData;
+
 public class DatabaseConnector {
 	
 	private String ERROR_MASSAGE = "NOT FOUND 400";
 	
-	private ArrayList<String[]> data;
+	private UserData data;
 	
 	protected ArrayList<String> adminData;
 	protected static String [] tablesData;
@@ -35,7 +39,7 @@ public class DatabaseConnector {
 		DatabaseConnector.dataBaseName = databaseName;
 		this.userData = userData;
 		this.configurationData = configurationData;
-		data = new ArrayList<String[]>();
+		data = new UserData();
 	}
 	
 	public void connectToDataBase(){
@@ -62,26 +66,18 @@ public class DatabaseConnector {
 
 	}
 	
-	public ArrayList<String[]> getUserData(String[] reqiredTables, String userName, String email, String password)throws SQLException {
-			
+	public UserData getUserData(String[] reqiredTables, String userName, String email, String password)throws SQLException {
+
 			if(connection == null){
 				connectToDataBase();
 			}
-			String tableName = findTableByName(reqiredTables);
-			if(tableName.equals(ERROR_MASSAGE)){
-				String [] tempo = new String [2];
-				tempo[0] = "valid";
-	        	tempo[1] = "false";
-	        	data.add(tempo);
-	        	return data;
-			}
-		    Statement stmt = null;
+			Statement stmt = null;
 		    String query = 
 		    		"SELECT DISTINCT * " +
 		    		"FROM `users` JOIN `credintials` USING (`user_id`)" +
 		    		"JOIN `tools` USING (`type_id`) JOIN `tools_data` USING (`tool_id`)" +
 		    		" WHERE `users`.user_name =" + "\""+ userName + "\"" +
-		    		"AND `users`.password =" + "\"" + password+ "\"" 
+		    		" AND `users`.password =" + "\"" + password+ "\"" 
 		    ;
 		    try {
 		    	try{
@@ -91,45 +87,45 @@ public class DatabaseConnector {
 		    	catch(SQLException e){
 		    		e.printStackTrace();
 		    	}
-		    	String[] tempo ;
+		    	System.out.println(query);
+		    	ArrayList<Tool> tools = new ArrayList<Tool>();
 		    	ResultSet rs = stmt.executeQuery(query);
 		    	if(rs.first()){
 		    		
 		    		boolean fine = true;
 		    		
-		    		tempo = new String[2];
-		    		tempo[0] = "valid";
-	    			tempo[1] = "true";
-	    			data.add(tempo);
+		    		data.setUserId(rs.getString("user_id"));
+		    		System.out.println(data.getUserId());
+		    		System.out.println("jhlashdks");
+		    		data.setUserName(rs.getString("user_name"));
+		    		data.setEmail(rs.getString("email"));
+		    		data.setDueDate(rs.getBigDecimal("due_date"));
+		    		data.setStartDate(rs.getBigDecimal("start_date"));
+		    		data.setTypeId(rs.getString("type_id"));
+		    		data.setValid(true);
+		    		
 		    		while(rs.next()){
 		    			if(fine){
 		    				fine = false;
 		    				rs.first();
 		    			}
-		    			String temp = rs.getString("tool_name");
-			           
-		    			tempo = new String[2];
-		    			tempo[0] = "tool_name";
-		    			tempo[1] = temp;
-		    			data.add(tempo);
-		    		
+		    			Tool temp = new Tool();
+		    			temp.setTool_calling_name(rs.getString("calling_name"));
+		    			temp.setTool_name(rs.getString("tool_name"));
+		    			temp.setTool_id(rs.getString("tool_id"));
+		    			tools.add(temp);	
+		    			
 		    		}	
+		    		data.setTools(tools);
 		    		return data;
 		    	}
 		        else{
-			        tempo = new String[2];
-		        	tempo[0] = "valid";
-		        	tempo[1] = "false";
-		        	data.add(tempo);
+		        	data.setValid(false);
 		        	return data;
 		        }
 		    } 
 		    catch (SQLException e ) {
-		        System.out.println(e.getMessage());
-		    	String[] tempo = new String[2];
-				tempo[0] = "valid";
-	        	tempo[1] = "false";
-	        	data.add(tempo);
+		        data.setValid(false);
 		    } finally {
 		        if (stmt != null) {
 		        	stmt.close();
@@ -164,29 +160,5 @@ public class DatabaseConnector {
 		error.show();
 	}
 
-	private String findTableByName(String[] tabelName) {
-		for(int i = 0 ; i < tablesData.length ; i++){
-			if(tablesData[i] == tabelName[0] ){
-				return tabelName[0];
-			}
-		}
-		return ERROR_MASSAGE;
-	}
+	
 }
-
-
-
-
-
-
-
-
-/*
-"SELECT DISTINCT `tool_id`, `tool_name`" +
-"FROM `users` JOIN `credintials` USING (`user_id`)" +
-"JOIN `tools` USING (`type_id`) JOIN `tools_data` USING (`tool_id`)" +
-" WHERE `users`.user_name =" + "\""+  + "\"" +
-"AND `users`.password =" + "\"" +       + "\"" 
-
-*/
-

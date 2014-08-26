@@ -1,5 +1,6 @@
 package com.mentor.app.database.helpers;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 
@@ -14,57 +15,64 @@ public class UserData {
 	private String userId;
 	private String typeId;   			 // the type of this client 
 	private ArrayList<Tool> tools;		 //	an array of tools all the tools can be accessed by that user 
-	private BigInteger dueDate;			 //	the due date that the user can still access any tool
-	private BigInteger startDate;		 // the date that the user registered using this type of users
+	private BigDecimal dueDate;			 //	the due date that the user can still access any tool
+	private BigDecimal startDate;		 // the date that the user registered using this type of users
 	private boolean valid;			 	 // checks the validity of the data returned to the main class in case that any error occurred this value will be false true in other cases
-
-	protected String getUserName() {
+	
+	
+	public UserData() {
+		tools = new ArrayList<>();
+	}
+	
+	public String getUserName() {
 		return userName;
 	}
-	protected void setUserName(String userName) {
+	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-	protected String getTypeId() {
-		return typeId;
-	}
-	protected void setTypeId(String typeId) {
-		this.typeId = typeId;
-	}
-	protected ArrayList<Tool> getTools() {
-		return tools;
-	}
-	protected void setTools(ArrayList<Tool> tools) {
-		this.tools = tools;
-	}
-	protected BigInteger getDueDate() {
-		return dueDate;
-	}
-	protected void setDueDate(BigInteger dueDate) {
-		this.dueDate = dueDate;
-	}
-	protected BigInteger getStartDate() {
-		return startDate;
-	}
-	protected void setStartDate(BigInteger startDate) {
-		this.startDate = startDate;
-	}
-	protected boolean isValid() {
-		return valid;
-	}
-	protected void setValid(boolean valid) {
-		this.valid = valid;
-	}
-	protected String getEmail() {
+	public String getEmail() {
 		return email;
 	}
-	protected void setEmail(String email) {
+	public void setEmail(String email) {
 		this.email = email;
 	}
-	protected String getUserId() {
+	public String getUserId() {
 		return userId;
 	}
-	protected void setUserId(String userId) {
+	public void setUserId(String userId) {
 		this.userId = userId;
 	}
+	public String getTypeId() {
+		return typeId;
+	}
+	public void setTypeId(String typeId) {
+		this.typeId = typeId;
+	}
+	public ArrayList<Tool> getTools() {
+		return tools;
+	}
+	public void setTools(ArrayList<Tool> tools) {
+		this.tools = tools;
+	}
+	public BigDecimal getDueDate() {
+		return dueDate;
+	}
+	public void setDueDate(BigDecimal bigDecimal) {
+		this.dueDate = bigDecimal;
+	}
+	public BigDecimal getStartDate() {
+		return startDate;
+	}
+	public void setStartDate(BigDecimal bigDecimal) {
+		this.startDate = bigDecimal;
+	}
+	public boolean isValid() {
+		return valid;
+	}
+	public void setValid(boolean valid) {
+		this.valid = valid;
+	}
+
+	
 	
 }

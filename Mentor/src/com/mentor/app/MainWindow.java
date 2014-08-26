@@ -36,6 +36,7 @@ import javax.swing.JTextField;
 import javax.swing.JRadioButton;
 
 import com.mentor.app.database.DatabaseConnector;
+import com.mentor.app.database.helpers.UserData;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -246,15 +247,21 @@ public class MainWindow {
 					String[] tables = new String[4];
 					tables[1] = "credintials";
 					tables[0] = "users";
-					ArrayList<String[]> ar = databaseClon.getUserData(tables, userNameText.getText(), emailText.getText(), String.copyValueOf(passwordText.getPassword()));
+					UserData ar = new UserData(); 
+					ar = databaseClon.getUserData(tables, userNameText.getText(), emailText.getText(), String.copyValueOf(passwordText.getPassword()));
 					
-					toolsList.setLayout(new GridLayout(ar.size()-1, 1, 5, 25));
-					System.out.println(ar.size());
-					JButton[] tools = new JButton [ar.size()];
+					
+					System.out.println(ar.getEmail());
+					toolsList.setLayout(new GridLayout(ar.getTools().size(), 1, 5, 25));
+					//System.out.println(ar.getTools().size());
+					System.out.println(ar.getTools().get(0).getTool_calling_name());
+					
+					System.out.println("hfghfgh");
+					JButton[] tools = new JButton [ar.getTools().size()];
 						
-					for(int i = 1 ; i < ar.size() ; i++){
+					for(int i = 0 ; i < ar.getTools().size() ; i++){
 						tools[i] = new JButton();
-						tools[i].setText(ar.get(i)[1]);
+						tools[i].setText(ar.getTools().get(i).getTool_calling_name());
 						tools[i].setBackground(Color.white);
 						tools[i].setBorder(null);
 						tools[i].setAlignmentX(JButton.LEFT_ALIGNMENT);
