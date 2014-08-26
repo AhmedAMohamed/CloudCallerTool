@@ -77,7 +77,7 @@ public class DatabaseConnector {
 			}
 		    Statement stmt = null;
 		    String query = 
-		    		"SELECT DISTINCT `tool_id`, `tool_name`" +
+		    		"SELECT DISTINCT * " +
 		    		"FROM `users` JOIN `credintials` USING (`user_id`)" +
 		    		"JOIN `tools` USING (`type_id`) JOIN `tools_data` USING (`tool_id`)" +
 		    		" WHERE `users`.user_name =" + "\""+ userName + "\"" +
