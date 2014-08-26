@@ -83,7 +83,6 @@ public class DatabaseConnector {
 		    		" WHERE `users`.user_name =" + "\""+ userName + "\"" +
 		    		"AND `users`.password =" + "\"" + password+ "\"" 
 		    ;
-		    System.out.println(query);
 		    try {
 		    	try{
 		    		stmt = connection.createStatement();
