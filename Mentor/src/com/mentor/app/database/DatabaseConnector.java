@@ -99,11 +99,15 @@ public class DatabaseConnector {
 		    		System.out.println("jhlashdks");
 		    		data.setUserName(rs.getString("user_name"));
 		    		data.setEmail(rs.getString("email"));
+		    		System.out.println(data.getEmail());
 		    		data.setDueDate(rs.getBigDecimal("due_date"));
+		    		System.out.println(data.getDueDate());
 		    		data.setStartDate(rs.getBigDecimal("start_date"));
+		    		System.out.println(data.getStartDate());
 		    		data.setTypeId(rs.getString("type_id"));
+		    		System.out.println(data.getTypeId());
 		    		data.setValid(true);
-		    		
+		    		int i = 0 ;
 		    		while(rs.next()){
 		    			if(fine){
 		    				fine = false;
@@ -111,10 +115,11 @@ public class DatabaseConnector {
 		    			}
 		    			Tool temp = new Tool();
 		    			temp.setTool_calling_name(rs.getString("calling_name"));
+		    			
 		    			temp.setTool_name(rs.getString("tool_name"));
 		    			temp.setTool_id(rs.getString("tool_id"));
 		    			tools.add(temp);	
-		    			
+		    			System.out.println(tools.get(i).getTool_name());
 		    		}	
 		    		data.setTools(tools);
 		    		return data;

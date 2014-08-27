@@ -41,7 +41,10 @@ import com.mentor.app.database.helpers.UserData;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
+import org.apache.commons.io.IOUtils;
 import org.eclipse.wb.swing.FocusTraversalOnArray;
 
 import java.awt.Component;
@@ -254,18 +257,17 @@ public class MainWindow {
 					System.out.println(ar.getEmail());
 					toolsList.setLayout(new GridLayout(ar.getTools().size(), 1, 5, 25));
 					//System.out.println(ar.getTools().size());
-					System.out.println(ar.getTools().get(0).getTool_calling_name());
 					
-					System.out.println("hfghfgh");
 					JButton[] tools = new JButton [ar.getTools().size()];
-						
 					for(int i = 0 ; i < ar.getTools().size() ; i++){
 						tools[i] = new JButton();
-						tools[i].setText(ar.getTools().get(i).getTool_calling_name());
+						tools[i].setText(ar.getTools().get(i).getTool_name());
+						System.out.println(i);
 						tools[i].setBackground(Color.white);
 						tools[i].setBorder(null);
 						tools[i].setAlignmentX(JButton.LEFT_ALIGNMENT);
 						tools[i].addActionListener(ac);
+						//InputStream in = IOUtils.toInputStream("gsdfsdf", "UTF-8");
 						toolsList.add(tools[i]);
 					}
 					loginPanel.setVisible(false);
@@ -273,7 +275,10 @@ public class MainWindow {
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
-				}
+				}/* catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}*/
 				
 			}
 		});
