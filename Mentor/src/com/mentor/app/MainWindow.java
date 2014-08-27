@@ -11,6 +11,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
@@ -18,6 +20,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Scanner;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -268,26 +271,10 @@ public class MainWindow {
 					loginPanel.setVisible(false);
 					toolsList.show();
 					System.out.println("start");
-					JSch ssh = new JSch();
-					Session session = ssh.getSession("root", "54.186.141.167", 22);
-					session.setX11Host("localhost");
-					session.setX11Port(0+6000);
-					UserInfo ui=new MyUserInfo();
-					session.setUserInfo(ui);
-					session.connect();
-					Channel channel = session.openChannel("shell");
-					channel.setXForwarding(true);
-					InputStream into = IOUtils.toInputStream("gedit; echo 'ahmed';");
-					channel.setInputStream(into);
-					channel.setOutputStream(System.out);
 					
-					channel.connect();
 					
 					System.out.println("done");
 				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (JSchException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
@@ -466,10 +453,23 @@ public class MainWindow {
 		public void actionPerformed(ActionEvent e) {
 			JButton current = (JButton)e.getSource();
 			try {
-				process = run.exec("sshpass -p '123456789' ssh -X -t Gehad@54.186.141.167"+ " '" + current.getText() + " ;'");
-			} catch (IOException e1) {
+				JSch ssh = new JSch();
+				Session session = ssh.getSession("root", "54.186.141.167", 22);
+				session.setX11Host("localhost");
+				session.setX11Port(0+6000);
+				UserInfo ui=new MyUserInfo();
+				session.setUserInfo(ui);
+				session.connect();
+				Channel channel = session.openChannel("shell");
+				channel.setXForwarding(true);
+				InputStream in = new ByteArrayInputStream(("gedit \n").getBytes());
+				channel.setInputStream(in);
+				channel.setOutputStream(System.out);
+				
+				channel.connect();
+			} catch (JSchException e1) {
 				// TODO Auto-generated catch block
-				e1.getStackTrace();
+				e1.printStackTrace();
 			}
 		}
 	};
