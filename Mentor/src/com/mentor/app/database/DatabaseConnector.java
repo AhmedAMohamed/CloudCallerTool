@@ -3,7 +3,6 @@ package com.mentor.app.database;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -19,8 +18,6 @@ import com.mentor.app.database.helpers.Tool;
 import com.mentor.app.database.helpers.UserData;
 
 public class DatabaseConnector {
-	
-	private String ERROR_MASSAGE = "NOT FOUND 400";
 	
 	private UserData data;
 	
