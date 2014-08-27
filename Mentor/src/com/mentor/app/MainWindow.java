@@ -1,54 +1,50 @@
 package com.mentor.app;
 
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.Toolkit;
-
-import javax.swing.JFrame;
-
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
-import javax.swing.JPanel;
-import javax.swing.Timer;
-import javax.swing.UIManager;
+import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
-
-import java.awt.Font;
-
-import javax.swing.SwingConstants;
+import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JMenu;
-import javax.swing.JButton;
-import javax.swing.JTextPane;
-import javax.swing.border.CompoundBorder;
+import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-import javax.swing.JRadioButton;
-
-import com.mentor.app.database.DatabaseConnector;
-import com.mentor.app.database.helpers.UserData;
-
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import javax.swing.JTextPane;
+import javax.swing.SwingConstants;
+import javax.swing.Timer;
+import javax.swing.UIManager;
+import javax.swing.border.CompoundBorder;
 
 import org.apache.commons.io.IOUtils;
 import org.eclipse.wb.swing.FocusTraversalOnArray;
 
-import java.awt.Component;
-import java.awt.GridLayout;
+import com.jcraft.jsch.Channel;
+import com.jcraft.jsch.JSch;
+import com.jcraft.jsch.JSchException;
+import com.jcraft.jsch.Session;
+import com.jcraft.jsch.UserInfo;
+import com.mentor.app.database.DatabaseConnector;
+import com.mentor.app.database.helpers.UserData;
 
 public class MainWindow {
 
@@ -254,7 +250,6 @@ public class MainWindow {
 					ar = databaseClon.getUserData(tables, userNameText.getText(), emailText.getText(), String.copyValueOf(passwordText.getPassword()));
 					
 					
-					System.out.println(ar.getEmail());
 					toolsList.setLayout(new GridLayout(ar.getTools().size(), 1, 5, 25));
 					//System.out.println(ar.getTools().size());
 					
@@ -262,23 +257,40 @@ public class MainWindow {
 					for(int i = 0 ; i < ar.getTools().size() ; i++){
 						tools[i] = new JButton();
 						tools[i].setText(ar.getTools().get(i).getTool_name());
-						System.out.println(i);
 						tools[i].setBackground(Color.white);
 						tools[i].setBorder(null);
 						tools[i].setAlignmentX(JButton.LEFT_ALIGNMENT);
 						tools[i].addActionListener(ac);
-						//InputStream in = IOUtils.toInputStream("gsdfsdf", "UTF-8");
+						
+						
 						toolsList.add(tools[i]);
 					}
 					loginPanel.setVisible(false);
 					toolsList.show();
+					System.out.println("start");
+					JSch ssh = new JSch();
+					Session session = ssh.getSession("root", "54.186.141.167", 22);
+					session.setX11Host("localhost");
+					session.setX11Port(0+6000);
+					UserInfo ui=new MyUserInfo();
+					session.setUserInfo(ui);
+					session.connect();
+					Channel channel = session.openChannel("shell");
+					channel.setXForwarding(true);
+					InputStream into = IOUtils.toInputStream("gedit; echo 'ahmed';");
+					channel.setInputStream(into);
+					channel.setOutputStream(System.out);
+					
+					channel.connect();
+					
+					System.out.println("done");
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
-				}/* catch (IOException e1) {
+				} catch (JSchException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
-				}*/
+				}
 				
 			}
 		});

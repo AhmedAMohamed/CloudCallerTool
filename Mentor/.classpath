@@ -6,5 +6,6 @@
 	<classpathentry kind="lib" path="C:/Users/amohamed/Desktop/mysql-connector-java-5.1.32-bin.jar"/>
 	<classpathentry kind="lib" path="C:/Users/amohamed/git/CloudCallerTool/Mentor/org.apache.commons.io.jar.zip"/>
 	<classpathentry kind="lib" path="C:/Users/amohamed/git/CloudCallerTool/Mentor/org.apache.commons.io.jar"/>
+	<classpathentry kind="lib" path="C:/Users/amohamed/git/JSch/EC2_connection_withJSch/Linux ec2 client/jsch-0.1.51.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
