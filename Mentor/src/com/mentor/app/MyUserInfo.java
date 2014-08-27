@@ -46,19 +46,32 @@ public class MyUserInfo implements UserInfo, UIKeyboardInteractive {
 
 	@Override
 	  public boolean promptPassword(String message){
-	    	  passwd= "ahmedalaa";
+	      Object[] ob={passwordField}; 
+	      int result=JOptionPane.showConfirmDialog(null, ob, message,JOptionPane.OK_CANCEL_OPTION);
+	      if(result==JOptionPane.OK_OPTION){
+	    	  passwd=passwordField.getText();
 	    	  return true;
-	      
+	      }
+	      else{
+	    	  return false;
+	      }
 	}
 
 	@Override
 	public boolean promptYesNo(String str){
-	       return true;
+	      Object[] options={ "yes", "no" };
+	      int foo=JOptionPane.showOptionDialog(null, 
+	             str,
+	             "Warning", 
+	             JOptionPane.DEFAULT_OPTION, 
+	             JOptionPane.WARNING_MESSAGE,
+	             null, options, options[0]);
+	       return foo==0;
 	    }
 
 	@Override
 	public void showMessage(String message) {
-		//JOptionPane.showMessageDialog(null, message);
+		JOptionPane.showMessageDialog(null, message);
 
 	}
 
