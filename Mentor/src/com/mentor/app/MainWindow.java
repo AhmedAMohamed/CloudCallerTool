@@ -12,7 +12,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
 import java.text.DateFormat;
@@ -36,7 +35,6 @@ import javax.swing.Timer;
 import javax.swing.UIManager;
 import javax.swing.border.CompoundBorder;
 
-import org.apache.commons.io.IOUtils;
 import org.eclipse.wb.swing.FocusTraversalOnArray;
 
 import com.jcraft.jsch.Channel;
@@ -253,12 +251,11 @@ public class MainWindow {
 					
 					
 					toolsList.setLayout(new GridLayout(ar.getTools().size(), 1, 5, 25));
-					//System.out.println(ar.getTools().size());
 					
 					JButton[] tools = new JButton [ar.getTools().size()];
 					for(int i = 0 ; i < ar.getTools().size() ; i++){
 						tools[i] = new JButton();
-						tools[i].setText(ar.getTools().get(i).getTool_name());
+						tools[i].setText(ar.getTools().get(i).getTool_calling_name());
 						tools[i].setBackground(Color.white);
 						tools[i].setBorder(null);
 						tools[i].setAlignmentX(JButton.LEFT_ALIGNMENT);
@@ -448,7 +445,6 @@ public class MainWindow {
 		public void actionPerformed(ActionEvent e) {
 			JButton current = (JButton)e.getSource();
 			try {
-				System.out.println("start");
 				JSch ssh = new JSch();
 				Session session = ssh.getSession("ec2-user", "54.186.141.167", 22);
 				session.setX11Host("localhost");
@@ -458,13 +454,14 @@ public class MainWindow {
 				session.connect();
 				Channel channel = session.openChannel("shell");
 				channel.setXForwarding(true);
-				InputStream into = new ByteArrayInputStream("gedit \n".getBytes());
+				String callingProgram = current.getText() + " \n";
+				InputStream into = new ByteArrayInputStream(callingProgram.getBytes());
 				channel.setInputStream(into);
 				channel.setOutputStream(System.out);
 				
 				channel.connect();
 				
-				System.out.println("done");
+				
 			} catch (JSchException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
