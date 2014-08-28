@@ -43,7 +43,7 @@ public class MyUserInfo implements UserInfo, UIKeyboardInteractive {
 
 	@Override
 	  public boolean promptPassword(String message){
-	    	  passwd= "yqajYpx31TYSc6zALPdqs7ykmnsBuMvF41G68Zkrr8vS/NNtqfxTYE5AgRYFxZ7+b64f2Qqlr6L+rDaE2SZLtB+aT6H5KvjOPNuNm5SqtETK9guXnQhTCvIP4kzE4kMCvgIlFkFrUnIGdrfzJuBLVQ==ASD1@#";
+	    	  passwd= "";
 	    	  return true;
 	      
 	}
