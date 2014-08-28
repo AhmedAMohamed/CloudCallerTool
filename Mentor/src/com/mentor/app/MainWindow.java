@@ -45,6 +45,7 @@ import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
 import com.jcraft.jsch.UserInfo;
 import com.mentor.app.database.DatabaseConnector;
+import com.mentor.app.database.helpers.MyUserInfo;
 import com.mentor.app.database.helpers.UserData;
 
 public class MainWindow {
