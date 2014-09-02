@@ -7,5 +7,11 @@
 	<classpathentry kind="lib" path="C:/Users/amohamed/git/CloudCallerTool/Mentor/org.apache.commons.io.jar.zip"/>
 	<classpathentry kind="lib" path="C:/Users/amohamed/git/CloudCallerTool/Mentor/org.apache.commons.io.jar"/>
 	<classpathentry kind="lib" path="C:/Users/amohamed/git/JSch/EC2_connection_withJSch/Linux ec2 client/jsch-0.1.51.jar"/>
+	<classpathentry kind="lib" path="C:/Users/amohamed/git/CloudCallerTool/Mentor/org-apache-commons-codec.jar"/>
+	<classpathentry kind="lib" path="C:/Users/amohamed/git/CloudCallerTool/Mentor/apache-httpcomponents-httpcore.jar"/>
+	<classpathentry kind="lib" path="C:/Users/amohamed/git/CloudCallerTool/Mentor/http-core-4.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/amohamed/git/CloudCallerTool/Mentor/httpclient-4.0.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/amohamed/git/CloudCallerTool/Mentor/commons-logging-api-1.1.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/amohamed/git/CloudCallerTool/Mentor/org.json-20120521.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
