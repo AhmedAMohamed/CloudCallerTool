@@ -13,18 +13,17 @@ import javax.swing.JTextField;
 
 import com.jcraft.jsch.UIKeyboardInteractive;
 import com.jcraft.jsch.UserInfo;
-
+/**
+ * This class is supposed to validate the ssh connection through the JSch library
+ * This class implement a Jsch interface to set the credentials, the server finger print, and the X11 forwarding configuration  
+ */ 
 public class MyUserInfo implements UserInfo, UIKeyboardInteractive {
 
 	private String passwd;
-	 JTextField passwordField=(JTextField)new JPasswordField(20);
-	 
-	 final GridBagConstraints gbc = 
-		      new GridBagConstraints(0,0,1,1,1,1,
-		                             GridBagConstraints.NORTHWEST,
-		                             GridBagConstraints.NONE,
-		                             new Insets(0,0,0,0),0,0);
-		    private Container panel;
+	final GridBagConstraints gbc = new GridBagConstraints(0, 0, 1, 1, 1, 1,
+			GridBagConstraints.NORTHWEST, GridBagConstraints.NONE, new Insets(
+					0, 0, 0, 0), 0, 0);
+	private Container panel;
 
 	@Override
 	public String getPassphrase() {
@@ -42,16 +41,18 @@ public class MyUserInfo implements UserInfo, UIKeyboardInteractive {
 	}
 
 	@Override
-	  public boolean promptPassword(String message){
-	    	  passwd= "";
-	    	  return true;
-	      
+	public boolean promptPassword(String message) {
+		// server user password
+		passwd = "yqajYpx31TYSc6zALPdqs7ykmnsBuMvF41G68Zkrr8vS/NNtqfxTYE5AgRYFxZ7+b64f2Qqlr6L+rDaE2SZLtB+aT6H5KvjOPNuNm5SqtETK9guXnQhTCvIP4kzE4kMCvgIlFkFrUnIGdrfzJuBLVQ==ASD1@#";
+		return true;
+
 	}
 
 	@Override
-	public boolean promptYesNo(String str){
-	       return true;
-	    }
+	public boolean promptYesNo(String str) {
+		// saving the finger print
+		return true;
+	}
 
 	@Override
 	public void showMessage(String message) {
@@ -59,48 +60,51 @@ public class MyUserInfo implements UserInfo, UIKeyboardInteractive {
 	}
 
 	@Override
-  public String[] promptKeyboardInteractive(String destination,String name,String instruction, String[] prompt,boolean[] echo){
-    	
-    	panel = new JPanel();
-    	panel.setLayout(new GridBagLayout());
- 
-    	gbc.weightx = 1.0;
-    	gbc.gridwidth = GridBagConstraints.REMAINDER;
-    	gbc.gridx = 0;
-    	panel.add(new JLabel(instruction), gbc);
-    	gbc.gridy++;
- 
-    	gbc.gridwidth = GridBagConstraints.RELATIVE;
- 
-    	JTextField[] texts=new JTextField[prompt.length];
-    	for(int i=0; i<prompt.length; i++){
-    		gbc.fill = GridBagConstraints.NONE;
-    		gbc.gridx = 0;
-    		gbc.weightx = 1;
-    		panel.add(new JLabel(prompt[i]),gbc);
- 
-    		gbc.gridx = 1;
-    		gbc.fill = GridBagConstraints.HORIZONTAL;
-    		gbc.weighty = 1;
-    		if(echo[i]){
-    			texts[i]=new JTextField(20);
-    		}	
-    		else{
-    			texts[i]=new JPasswordField(20);
-    		}
-    		panel.add(texts[i], gbc);
-    		gbc.gridy++;
-    	}
- 
-    	if(JOptionPane.showConfirmDialog(null, panel,destination+": "+name,JOptionPane.OK_CANCEL_OPTION,JOptionPane.QUESTION_MESSAGE)==JOptionPane.OK_OPTION){String[] response=new String[prompt.length];
-        	for(int i=0; i<prompt.length; i++){
-        		response[i]=texts[i].getText();
-        	}
-        	return response;
-    	}
-    	else{
-    		return null;  // cancel
-    	}
-    }
+	public String[] promptKeyboardInteractive(String destination, String name,
+			String instruction, String[] prompt, boolean[] echo) {
+
+		// asking the AWS server to validate the credentials
+		panel = new JPanel();
+		panel.setLayout(new GridBagLayout());
+
+		gbc.weightx = 1.0;
+		gbc.gridwidth = GridBagConstraints.REMAINDER;
+		gbc.gridx = 0;
+		panel.add(new JLabel(instruction), gbc);
+		gbc.gridy++;
+
+		gbc.gridwidth = GridBagConstraints.RELATIVE;
+
+		JTextField[] texts = new JTextField[prompt.length];
+		for (int i = 0; i < prompt.length; i++) {
+			gbc.fill = GridBagConstraints.NONE;
+			gbc.gridx = 0;
+			gbc.weightx = 1;
+			panel.add(new JLabel(prompt[i]), gbc);
+
+			gbc.gridx = 1;
+			gbc.fill = GridBagConstraints.HORIZONTAL;
+			gbc.weighty = 1;
+			if (echo[i]) {
+				texts[i] = new JTextField(20);
+			} else {
+				texts[i] = new JPasswordField(20);
+			}
+			panel.add(texts[i], gbc);
+			gbc.gridy++;
+		}
+
+		if (JOptionPane.showConfirmDialog(null, panel, destination + ": "
+				+ name, JOptionPane.OK_CANCEL_OPTION,
+				JOptionPane.QUESTION_MESSAGE) == JOptionPane.OK_OPTION) {
+			String[] response = new String[prompt.length];
+			for (int i = 0; i < prompt.length; i++) {
+				response[i] = texts[i].getText();
+			}
+			return response;
+		} else {
+			return null;
+		}
+	}
 
 }
