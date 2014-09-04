@@ -730,7 +730,6 @@ public class MainWindow {
 		// /////////////////////////////////////////////////////////////////
 		// Setting frame veiw
 		frmMentorApplication.setBackground(new Color(102, 102, 102));
-		frmMentorApplication.setResizable(false);
 		frmMentorApplication.setSize(mainWindowSize);
 		frmMentorApplication.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		// End setting the frame view
